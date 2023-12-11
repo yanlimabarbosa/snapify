@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form"
 import { SignupValidation } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/Loader"
+import { createUserAccount } from "@/lib/validation/appwrite/api"
 
 const SignupForm = () => {
   const isLoading = false
@@ -32,18 +33,15 @@ const SignupForm = () => {
     },
   })
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+    const newUser = await createUserAccount(values)
+    console.log(newUser)
   }
 
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <img src="/public/assets/images/logo.svg" alt="logo" />
-        {/* <img src="/public/assets/images/logo-before.svg" alt="logo" /> */}
 
         {/* <h2 className="h3-bold md:h2-bold pt-12 md:pt-5"> */}
         <h2 className="h3-bold md:h2-bold pt-5 md:pt-12">
