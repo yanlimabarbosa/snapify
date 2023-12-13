@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form"
 import { SignupValidation } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/Loader"
-import { createUserAccount } from "@/lib/validation/appwrite/api"
+import { createUserAccount } from "@/lib/appwrite/api"
 
 const SignupForm = () => {
   const isLoading = false
