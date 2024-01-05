@@ -17,7 +17,7 @@ const PostDetails = () => {
 
   async function handleDeletePost() {
     await deletePost({ postId: id, imageId: post?.imageId })
-    navigate(-1)
+    navigate("/home")
   }
 
   return (
