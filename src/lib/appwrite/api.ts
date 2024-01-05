@@ -102,14 +102,16 @@ export async function createPost(post: INewPost) {
       // Upload file to appwrite storage
       const uploadedFile = await uploadFile(post.file[0]);
 
-      // Get file url
-      fileUrl = getFilePreview(uploadedFile.$id);
-      if (!fileUrl) {
-        await deleteFile(uploadedFile.$id);
-        throw Error;
-      }
+      if (uploadedFile) {
+        // Get file url
+        fileUrl = getFilePreview(uploadedFile.$id);
+        if (!fileUrl) {
+          await deleteFile(uploadedFile.$id);
+          throw new Error("Failed to get file URL");
+        }
 
-      imageId = uploadedFile.$id;
+        imageId = uploadedFile.$id;
+      }
     }
 
     // Convert tags into array
@@ -141,7 +143,7 @@ export async function createPost(post: INewPost) {
 
     if (!newPost && imageId) {
       await deleteFile(imageId);
-      throw Error;
+      throw new Error("Failed to create post");
     }
 
     return newPost;
@@ -164,7 +166,7 @@ export async function uploadFile(file: File) {
   }
 }
 
-export function getFilePreview(fileId: string) {
+export function getFilePreview(fileId: string | any) {
   try {
     const fileUrl = storage.getFilePreview(
       appwriteConfig.storageId,
@@ -218,7 +220,7 @@ export async function likePost(postId: string, likesArray: string[]) {
   }
 }
 
-export async function savePost(userId: string[], postId: string,) {
+export async function savePost(userId: string, postId: string,) {
   try {
     const updatedPost = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.savesCollectionId, ID.unique(), {
       user: userId,
@@ -319,13 +321,18 @@ export async function updatePost(post: IUpdatePost) {
   }
 }
 
-export async function deletePost(postId?: number, imageId?: string | undefined) {
+export async function deletePost(postId?: string, imageId?: string | undefined) {
 
   try {
+    if (!postId) {
+      throw new Error("Invalid postId");
+    }
     const statusCode = await databases.deleteDocument(appwriteConfig.databaseId, appwriteConfig.postCollectionId, postId)
     if (!statusCode) throw Error
 
-    await deleteFile(imageId);
+    if (imageId) {
+      await deleteFile(imageId);
+    }
     return { status: "Ok" }
   } catch (error) {
     console.log(error)

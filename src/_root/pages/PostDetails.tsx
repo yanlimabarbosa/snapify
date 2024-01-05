@@ -17,13 +17,13 @@ const PostDetails = () => {
 
   async function handleDeletePost() {
     await deletePost({ postId: id, imageId: post?.imageId })
-    navigate("/home")
+    navigate("/")
   }
 
   return (
     <div className="post_details-container">
       <div className="hidden md:flex max-w-5xl w-full">
-        <Button onClick={() => navigate(-1)} variant="ghost" className="shad-button_ghost">
+        <Button onClick={() => navigate("/")} variant="ghost" className="shad-button_ghost">
           <img src={"/assets/icons/back.svg"} alt="back" width={24} height={24} />
           <p className="small-medium lg:base-medium">Back</p>
         </Button>
