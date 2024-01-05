@@ -8,7 +8,7 @@ import { Button } from "../ui/button"
 const LeftSidebar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { mutate: signOut, isSuccess } = useSignOutAccount()
+  const { mutate: signOut/*, isSuccess*/ } = useSignOutAccount()
   const { user } = useUsercontext()
 
   const handleSignOut = async (
