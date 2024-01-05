@@ -14,7 +14,6 @@ export type IUpdateUser = {
 };
 
 export type INewPost = {
-  creator: string;
   userId: string;
   caption: string;
   file: File[];

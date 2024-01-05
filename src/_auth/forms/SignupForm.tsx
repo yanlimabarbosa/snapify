@@ -3,14 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 import { useToast } from "@/components/ui/use-toast"
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -18,22 +11,17 @@ import { useForm } from "react-hook-form"
 import { SignupValidation } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/Loader"
-import {
-  useCreateUserAccount,
-  useSignInAccount,
-} from "@/lib/react-query/queriesAndMutations"
+import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations"
 import { useUsercontext } from "@/context/AuthContext"
 
 const SignupForm = () => {
   const { toast } = useToast()
-  const { checkAuthUser/*, isLoading: isUserLoading*/ } = useUsercontext()
+  const { checkAuthUser /*, isLoading: isUserLoading*/ } = useUsercontext()
   const navigate = useNavigate()
 
-  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
-    useCreateUserAccount()
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount()
 
-const { mutateAsync: signInAccount/*, isPending: isSigningIn*/ } =
-    useSignInAccount()
+  const { mutateAsync: signInAccount /*, isPending: isSigningIn*/ } = useSignInAccount()
 
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
@@ -78,17 +66,10 @@ const { mutateAsync: signInAccount/*, isPending: isSigningIn*/ } =
         <img src="/public/assets/images/logo.svg" alt="logo" />
 
         {/* <h2 className="h3-bold md:h2-bold pt-12 md:pt-5"> */}
-        <h2 className="h3-bold md:h2-bold pt-5 md:pt-12">
-          Create a new account
-        </h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">
-          To use Snapify. please enter your details
-        </p>
+        <h2 className="h3-bold md:h2-bold pt-5 md:pt-12">Create a new account</h2>
+        <p className="text-light-3 small-medium md:base-regular mt-2">To use Snapify. please enter your details</p>
 
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col w-full mt-4"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full mt-4">
           <FormField
             control={form.control}
             name="name"
@@ -141,11 +122,10 @@ const { mutateAsync: signInAccount/*, isPending: isSigningIn*/ } =
               </FormItem>
             )}
           />
-          <Button type="submit" className="shad-button_primary mt-4">
+          <Button type="submit" className="shad-button_primary mt-4" disabled={isCreatingAccount}>
             {isCreatingAccount ? (
               <div className="flex-center gap-2">
                 <Loader />
-                Loading...
               </div>
             ) : (
               "Sign up"
@@ -154,10 +134,7 @@ const { mutateAsync: signInAccount/*, isPending: isSigningIn*/ } =
 
           <p className="text-small-regular text-light-2 text-center mt-2">
             Already have an account?
-            <Link
-              to="/sign-in"
-              className="text-primary-500 text-small-semibold ml-1"
-            >
+            <Link to="/sign-in" className="text-primary-500 text-small-semibold ml-1">
               Log in
             </Link>
           </p>
