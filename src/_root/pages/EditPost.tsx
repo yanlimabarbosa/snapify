@@ -1,11 +1,11 @@
 import PostForm from "@/components/forms/PostForm"
-import { useGetPostByID } from "@/lib/react-query/queriesAndMutations"
-import { Loader } from "lucide-react"
+import Loader from "@/components/ui/Loader"
+import { useGetPostById } from "@/lib/react-query/queriesAndMutations"
 import { useParams } from "react-router-dom"
 
 const EditPost = () => {
   const { id } = useParams()
-  const { data: post, isPending } = useGetPostByID(id || "")
+  const { data: post, isPending } = useGetPostById(id || "")
 
   if (isPending) return <Loader />
 

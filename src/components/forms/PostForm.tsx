@@ -13,7 +13,7 @@ import FileUploader from "../shared/FileUploader"
 import { Textarea } from "../ui/textarea"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
-import { Loader } from "lucide-react"
+import Loader from "../ui/Loader"
 
 type PostFormProps = {
   post?: Models.Document
@@ -128,7 +128,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
         />
 
         <div className="flex gap-4 items-center justify-end">
-          <Button type="button" className="shad-button_dark_4">
+          <Button type="button" className="shad-button_dark_4" onClick={() => navigate(-1)}>
             Cancel
           </Button>
           <Button
