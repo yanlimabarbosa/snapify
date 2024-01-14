@@ -10,10 +10,8 @@ import {
   EditPost,
   Explore,
   Home,
-  LikedPosts,
   PostDetails,
   Profile,
-  // Profile,
   Saved,
   UpdateProfile,
 } from "./_root/pages"

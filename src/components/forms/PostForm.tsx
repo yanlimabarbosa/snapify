@@ -90,7 +90,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
           name="file"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Add Photos</FormLabel>
+              <FormLabel className="shad-form_label">Add Photos (Optional)</FormLabel>
               <FormControl>
                 <FileUploader fieldChange={field.onChange} mediaUrl={post?.imageUrl} />
               </FormControl>
@@ -128,6 +128,16 @@ const PostForm = ({ post, action }: PostFormProps) => {
         />
 
         <div className="flex gap-4 items-center justify-end">
+          {action === "Update" && (
+            <Button
+              onClick={() => navigate(`/posts/${post?.$id}`)}
+              variant="ghost"
+              className={`ghost_details-delete_btn ${user.id !== post?.creator.$id && "hidden"}`}
+            >
+              <img src="/assets/icons/delete.svg" alt="delete" width={24} height={24} />
+            </Button>
+          )}
+
           <Button type="button" className="shad-button_dark_4" onClick={() => navigate(-1)}>
             Cancel
           </Button>

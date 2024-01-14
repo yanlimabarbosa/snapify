@@ -4,6 +4,7 @@ import { INITIAL_USER, useUserContext } from "@/context/AuthContext"
 import { sidebarLinks } from "@/constants"
 import { INavLink } from "@/types"
 import { Button } from "../ui/button"
+import Loader from "../ui/Loader"
 
 const LeftSidebar = () => {
   const navigate = useNavigate()
@@ -26,17 +27,30 @@ const LeftSidebar = () => {
           <img src="/assets/images/logo.svg" alt="logo" width={170} height={36} />
         </Link>
 
-        <Link to={`/profile/${user.id}`} className="flex gap-3 item-center">
-          <img
-            src={user.imageUrl || "/assets/icons/profile-placeholder.svg"}
-            alt="profile"
-            className="h-14 w-14 rounded full"
-          />
-          <div className="flex-col">
-            <p className="body-bold">{user.name}</p>
-            <p className="small-regular text-light-3">@{user.name}</p>
-          </div>
-        </Link>
+        {!user.name ? (
+          <Loader />
+        ) : (
+          <Link to={`/profile/${user.id}`} className="flex gap-3 item-center">
+            <img
+              src={user.imageUrl || "/assets/icons/profile-placeholder.svg"}
+              alt="profile"
+              className="h-14 w-14 rounded full"
+            />
+            <div className="flex-col">
+              <p className="body-bold">{user.username ? `@${user.name}` : "Get Started!"}</p>
+              <p className="small-regular text-light-3">
+                {user.username ? (
+                  `@${user.name}`
+                ) : (
+                  <>
+                    Go back and create an account or log in <br />
+                    to access personalized content and features.
+                  </>
+                )}
+              </p>
+            </div>
+          </Link>
+        )}
 
         <ul className="flex flex-col gap-6">
           {sidebarLinks.map((link: INavLink) => {
@@ -59,7 +73,7 @@ const LeftSidebar = () => {
 
       <Button variant="ghost" className="shad-button_ghost" onClick={(e) => handleSignOut(e)}>
         <img src="/assets/icons/logout.svg" alt="logout" />
-        <p className="small-medium lg:base-medium">Logout</p>
+        <p className="small-medium lg:base-medium">{user.name ? "Logout" : "Go back"}</p>
       </Button>
     </nav>
   )
