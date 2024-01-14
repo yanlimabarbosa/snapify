@@ -1,4 +1,4 @@
-import { useUsercontext } from "@/context/AuthContext"
+import { useUserContext } from "@/context/AuthContext"
 import { multiFormatDateString } from "@/lib/utils"
 import { Models } from "appwrite"
 import { Link } from "react-router-dom"
@@ -9,7 +9,7 @@ type PostCardProps = {
 }
 
 const PostCard = ({ post }: PostCardProps) => {
-  const { user } = useUsercontext()
+  const { user } = useUserContext()
 
   if (!post.creator) return
 

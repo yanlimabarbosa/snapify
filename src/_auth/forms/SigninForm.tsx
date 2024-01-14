@@ -11,11 +11,13 @@ import { SigninValidation } from "@/lib/validation"
 import { z } from "zod"
 import Loader from "@/components/ui/Loader"
 import { useSignInAccount } from "@/lib/react-query/queriesAndMutations"
-import { useUsercontext } from "@/context/AuthContext"
+import { useUserContext } from "@/context/AuthContext"
+import { useState } from "react"
 
 const SigninForm = () => {
+  const [isUserLoading, setIsUserLoading] = useState(false)
   const { toast } = useToast()
-  const { checkAuthUser, isLoading: isUserLoading } = useUsercontext()
+  const { checkAuthUser } = useUserContext()
   const navigate = useNavigate()
 
   const { mutateAsync: signInAccount } = useSignInAccount()
@@ -30,12 +32,14 @@ const SigninForm = () => {
 
   //SUBMIT HANDLER
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
+    setIsUserLoading(true)
     const session = await signInAccount({
       email: values.email,
       password: values.password,
     })
 
     if (!session) {
+      setIsUserLoading(false)
       return toast({ title: "Sign in failed. Please try again" })
     }
 
@@ -43,7 +47,9 @@ const SigninForm = () => {
     if (isLoggedIn) {
       form.reset()
       navigate("/")
+      setIsUserLoading(false)
     } else {
+      setIsUserLoading(false)
       return toast({ title: "Sign up failed. Please try again." })
     }
   }

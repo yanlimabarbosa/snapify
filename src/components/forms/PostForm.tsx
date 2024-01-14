@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { PostValidation } from "@/lib/validation"
 import { useToast } from "@/components/ui/use-toast"
-import { useUsercontext } from "@/context/AuthContext"
+import { useUserContext } from "@/context/AuthContext"
 import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations"
 import FileUploader from "../shared/FileUploader"
 import { Textarea } from "../ui/textarea"
@@ -23,7 +23,7 @@ type PostFormProps = {
 const PostForm = ({ post, action }: PostFormProps) => {
   const navigate = useNavigate()
   const { toast } = useToast()
-  const { user } = useUsercontext()
+  const { user } = useUserContext()
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
     defaultValues: {
