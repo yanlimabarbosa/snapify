@@ -40,9 +40,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate()
 
   const checkAuthUser = async () => {
+    setIsLoading(true);
     try {
-      const currentAccount = await getCurrentUser()
-
+      const currentAccount = await getCurrentUser();
       if (currentAccount) {
         setUser({
           id: currentAccount.$id,
@@ -51,22 +51,20 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: currentAccount.email,
           imageUrl: currentAccount.imageUrl,
           bio: currentAccount.bio,
-        })
+        });
+        setIsAuthenticated(true);
 
-        setIsAuthenticated(true)
-
-        return true
+        return true;
       }
-      setIsAuthenticated(false)
-      return false
+
+      return false;
     } catch (error) {
-      console.log(error)
-      setIsAuthenticated(false)
-      return false
+      console.error(error);
+      return false;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     const cookieFallback = localStorage.getItem("cookieFallback")

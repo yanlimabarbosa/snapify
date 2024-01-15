@@ -53,7 +53,7 @@ const Profile = () => {
             <div className={`${user.id !== id && "hidden"}`}>
               <a
                 className="h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg false"
-                href="/update-profile/659e199b89937a81959e"
+                href={`/update-profile/${user.id}`}
               >
                 <img src="/assets/icons/edit.svg" alt="edit" width="20" height="20" />
                 <p className="flex whitespace-nowrap small-medium">Edit Profile</p>

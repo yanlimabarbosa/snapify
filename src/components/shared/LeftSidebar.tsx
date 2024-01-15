@@ -37,10 +37,10 @@ const LeftSidebar = () => {
               className="h-14 w-14 rounded full"
             />
             <div className="flex-col">
-              <p className="body-bold">{user.username ? `@${user.name}` : "Get Started!"}</p>
+              <p className="body-bold">{user.name ? `@${user.name}` : "Get Started!"}</p>
               <p className="small-regular text-light-3">
                 {user.username ? (
-                  `@${user.name}`
+                  `@${user.username}`
                 ) : (
                   <>
                     Go back and create an account or log in <br />
